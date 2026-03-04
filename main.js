@@ -15,12 +15,13 @@ class LottoGenerator extends HTMLElement {
         align-items: center;
         gap: 20px;
         padding: 25px;
-        background: rgba(255, 255, 255, 0.1);
+        background: var(--card-bg, rgba(255, 255, 255, 0.1));
         border-radius: 15px;
         box-shadow: 0 8px 32px 0 rgba(31, 38, 135, 0.37);
         backdrop-filter: blur(4px);
         -webkit-backdrop-filter: blur(4px);
-        border: 1px solid rgba(255, 255, 255, 0.18);
+        border: 1px solid var(--card-border, rgba(255, 255, 255, 0.18));
+        transition: all 0.3s;
       }
 
       button {
@@ -28,15 +29,15 @@ class LottoGenerator extends HTMLElement {
         font-size: 1.2rem;
         border: none;
         border-radius: 8px;
-        background-color: #4a90e2;
+        background-color: var(--btn-bg, #4a90e2);
         color: white;
         cursor: pointer;
         transition: background-color 0.3s, transform 0.2s;
-        box-shadow: 0 4px 15px 0 rgba(74, 144, 226, 0.75);
+        box-shadow: 0 4px 15px 0 var(--btn-shadow, rgba(74, 144, 226, 0.75));
       }
 
       button:hover {
-        background-color: #357abd;
+        opacity: 0.9;
         transform: translateY(-2px);
       }
 
@@ -99,3 +100,8 @@ class LottoGenerator extends HTMLElement {
 }
 
 customElements.define('lotto-generator', LottoGenerator);
+
+// Theme Toggle Logic
+document.getElementById('theme-toggle').addEventListener('click', () => {
+  document.body.classList.toggle('light-mode');
+});
