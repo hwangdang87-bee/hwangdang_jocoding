@@ -107,7 +107,7 @@ document.getElementById('theme-toggle').addEventListener('click', () => {
 });
 
 // Animal Face Test Logic
-const URL = "https://teachablemachine.withgoogle.com/models/h78Q97mId/"; // Example model, replace with your own
+const URL = "https://teachablemachine.withgoogle.com/models/Ly07AVLo8/"; // User provided model
 let model, labelContainer, maxPredictions;
 
 async function init() {
