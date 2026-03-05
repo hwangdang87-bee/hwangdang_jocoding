@@ -50,6 +50,71 @@ body {
     background: rgba(255, 255, 255, 0.2);
 }
 
+.animal-test-container {
+    margin-top: 30px;
+    margin-bottom: 50px;
+    padding: 30px;
+    background: var(--card-bg);
+    border-radius: 15px;
+    border: 1px solid var(--card-border);
+    backdrop-filter: blur(10px);
+    width: 90%;
+    max-width: 500px;
+    box-shadow: 0 8px 32px 0 rgba(31, 38, 135, 0.37);
+    text-align: center;
+}
+
+.upload-area {
+    border: 2px dashed var(--card-border);
+    border-radius: 10px;
+    padding: 20px;
+    transition: background 0.3s;
+}
+
+#upload-btn {
+    padding: 10px 20px;
+    border: none;
+    border-radius: 8px;
+    background-color: var(--btn-bg);
+    color: white;
+    font-weight: bold;
+    cursor: pointer;
+}
+
+#face-image {
+    width: 250px;
+    height: 250px;
+    object-fit: cover;
+    border-radius: 15px;
+    margin: 20px auto;
+    display: block;
+    box-shadow: 0 4px 15px rgba(0,0,0,0.3);
+}
+
+.dog-animal-title {
+    color: #ff9d00;
+    font-size: 1.5rem;
+    font-weight: bold;
+    margin-top: 20px;
+}
+
+.cat-animal-title {
+    color: #ff5e5e;
+    font-size: 1.5rem;
+    font-weight: bold;
+    margin-top: 20px;
+}
+
+.animal-explain {
+    font-size: 1.1rem;
+    margin: 10px 0;
+}
+
+#label-container {
+    margin-top: 20px;
+    font-size: 0.9rem;
+}
+
 .contact-section {
     margin-top: 50px;
     margin-bottom: 50px;

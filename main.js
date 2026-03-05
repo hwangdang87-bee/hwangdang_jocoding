@@ -105,3 +105,80 @@ customElements.define('lotto-generator', LottoGenerator);
 document.getElementById('theme-toggle').addEventListener('click', () => {
   document.body.classList.toggle('light-mode');
 });
+
+// Animal Face Test Logic
+const URL = "https://teachablemachine.withgoogle.com/models/h78Q97mId/"; // Example model, replace with your own
+let model, labelContainer, maxPredictions;
+
+async function init() {
+    const modelURL = URL + "model.json";
+    const metadataURL = URL + "metadata.json";
+    model = await tmImage.load(modelURL, metadataURL);
+    maxPredictions = model.getTotalClasses();
+    labelContainer = document.getElementById("label-container");
+    for (let i = 0; i < maxPredictions; i++) {
+        labelContainer.appendChild(document.createElement("div"));
+    }
+}
+
+async function predict() {
+    const tempImage = document.getElementById("face-image");
+    const prediction = await model.predict(tempImage, false);
+    
+    prediction.sort((a, b) => parseFloat(b.probability) - parseFloat(a.probability));
+    
+    let resultTitle, resultExplain;
+    switch (prediction[0].className) {
+        case "dog":
+            resultTitle = "귀여운 강아지상";
+            resultExplain = "당신은 밝고 사교적이며 충직한 성격을 가진 강아지상입니다!";
+            break;
+        case "cat":
+            resultTitle = "도도한 고양이상";
+            resultExplain = "당신은 차분하고 신비로우며 매력적인 고양이상입니다!";
+            break;
+        default:
+            resultTitle = "알 수 없음";
+            resultExplain = "";
+    }
+    
+    const title = "<div class='" + prediction[0].className + "-animal-title'>" + resultTitle + "</div>";
+    const explain = "<div class='animal-explain pt-2'>" + resultExplain + "</div>";
+    document.getElementById("result-message").innerHTML = title + explain;
+
+    for (let i = 0; i < maxPredictions; i++) {
+        const classPrediction =
+            prediction[i].className + ": " + (prediction[i].probability * 100).toFixed(0) + "%";
+        labelContainer.childNodes[i].innerHTML = classPrediction;
+        labelContainer.childNodes[i].style.margin = "10px 0";
+    }
+}
+
+// Image Upload Handling
+const uploadBtn = document.getElementById('upload-btn');
+const imageInput = document.getElementById('image-upload');
+const faceImage = document.getElementById('face-image');
+const previewContainer = document.getElementById('image-preview-container');
+const loadingSpinner = document.getElementById('loading-spinner');
+
+uploadBtn.addEventListener('click', () => imageInput.click());
+
+imageInput.addEventListener('change', (e) => {
+    const file = e.target.files[0];
+    if (file) {
+        const reader = new FileReader();
+        reader.onload = async (event) => {
+            faceImage.src = event.target.result;
+            previewContainer.style.display = 'block';
+            loadingSpinner.style.display = 'block';
+            document.getElementById("result-message").innerHTML = "";
+            document.getElementById("label-container").innerHTML = "";
+            
+            if (!model) await init();
+            await predict();
+            
+            loadingSpinner.style.display = 'none';
+        };
+        reader.readAsDataURL(file);
+    }
+});

@@ -3,11 +3,30 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Lotto Number Generator</title>
+    <title>Animal Face Test & Lotto</title>
     <link rel="stylesheet" href="style.css">
+    <!-- TensorFlow.js and Teachable Machine Libraries -->
+    <script src="https://cdn.jsdelivr.net/npm/@tensorflow/tfjs@latest/dist/tf.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@teachablemachine/image@latest/dist/teachablemachine-image.min.js"></script>
 </head>
 <body>
     <button id="theme-toggle">🌓 Toggle Mode</button>
+    <h1>Animal Face Test</h1>
+    
+    <div class="animal-test-container">
+        <div id="upload-area" class="upload-area">
+            <p>사진을 올려주세요 (강아지/고양이 상 테스트)</p>
+            <input type="file" id="image-upload" accept="image/*" hidden>
+            <button id="upload-btn">사진 선택</button>
+        </div>
+        <div id="image-preview-container" style="display: none;">
+            <img id="face-image" src="" alt="your face">
+            <div id="loading-spinner" style="display: none;">분석 중...</div>
+            <div id="label-container"></div>
+        </div>
+        <div id="result-message"></div>
+    </div>
+
     <h1>Lotto Number Generator</h1>
     <lotto-generator></lotto-generator>
 
@@ -36,15 +55,6 @@
 
     <div id="disqus_thread" class="comments-section"></div>
     <script>
-        /**
-        *  RECOMMENDED CONFIGURATION VARIABLES: EDIT AND UNCOMMENT THE SECTION BELOW TO INSERT DYNAMIC VALUES FROM YOUR PLATFORM OR CMS.
-        *  LEARN WHY DEFINING THESE VARIABLES IS IMPORTANT: https://disqus.com/admin/universalcode/#configuration-variables    */
-        /*
-        var disqus_config = function () {
-        this.page.url = PAGE_URL;  // Replace PAGE_URL with your page's canonical URL variable
-        this.page.identifier = PAGE_IDENTIFIER; // Replace PAGE_IDENTIFIER with your page's unique identifier variable
-        };
-        */
         (function() { // DON'T EDIT BELOW THIS LINE
         var d = document, s = d.createElement('script');
         s.src = 'https://hwangdang-world.disqus.com/embed.js';
