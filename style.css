@@ -118,3 +118,16 @@ body {
     opacity: 0.9;
     transform: translateY(-2px);
 }
+
+.comments-section {
+    margin-top: 50px;
+    margin-bottom: 50px;
+    padding: 30px;
+    background: var(--card-bg);
+    border-radius: 15px;
+    border: 1px solid var(--card-border);
+    backdrop-filter: blur(10px);
+    width: 90%;
+    max-width: 800px;
+    box-shadow: 0 8px 32px 0 rgba(31, 38, 135, 0.37);
+}
