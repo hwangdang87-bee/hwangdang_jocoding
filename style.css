@@ -19,7 +19,6 @@ body.light-mode {
 body {
     display: flex;
     flex-direction: column;
-    justify-content: center;
     align-items: center;
     min-height: 100vh;
     background: var(--bg-color);
@@ -43,22 +42,116 @@ body {
     font-weight: bold;
     backdrop-filter: blur(4px);
     transition: all 0.3s;
+    z-index: 1000;
 }
 
-#theme-toggle:hover {
-    transform: scale(1.05);
-    background: rgba(255, 255, 255, 0.2);
+.main-nav {
+    margin-top: 80px;
+    display: flex;
+    gap: 10px;
+    background: var(--card-bg);
+    padding: 10px 20px;
+    border-radius: 30px;
+    backdrop-filter: blur(10px);
+    border: 1px solid var(--card-border);
 }
 
-.animal-test-container {
+.main-nav button {
+    background: transparent;
+    border: none;
+    color: var(--text-color);
+    padding: 10px 15px;
+    cursor: pointer;
+    font-weight: bold;
+    border-radius: 20px;
+    transition: background 0.3s;
+}
+
+.main-nav button:hover {
+    background: var(--btn-bg);
+    color: white;
+}
+
+.page-content {
+    width: 100%;
+    max-width: 800px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding: 20px;
+}
+
+.welcome-card {
+    background: var(--card-bg);
+    padding: 40px;
+    border-radius: 20px;
+    border: 1px solid var(--card-border);
+    backdrop-filter: blur(10px);
+    text-align: center;
+    margin-bottom: 30px;
+}
+
+.quick-links {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 15px;
+    justify-content: center;
     margin-top: 30px;
-    margin-bottom: 50px;
+}
+
+.quick-links button {
+    padding: 15px 25px;
+    border-radius: 12px;
+    border: none;
+    background: var(--btn-bg);
+    color: white;
+    font-weight: bold;
+    cursor: pointer;
+    transition: transform 0.2s;
+}
+
+.quick-links button:hover {
+    transform: translateY(-5px);
+}
+
+.lunch-container {
+    background: var(--card-bg);
+    padding: 40px;
+    border-radius: 20px;
+    border: 1px solid var(--card-border);
+    backdrop-filter: blur(10px);
+    text-align: center;
+    width: 100%;
+    max-width: 400px;
+}
+
+.lunch-result-card {
+    font-size: 2rem;
+    font-weight: bold;
+    margin-bottom: 30px;
+    min-height: 3rem;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.rotating {
+    animation: rotate 0.1s infinite alternate;
+}
+
+@keyframes rotate {
+    from { transform: rotate(-5deg); }
+    to { transform: rotate(5deg); }
+}
+
+/* Animal Test Styles */
+.animal-test-container {
     padding: 30px;
     background: var(--card-bg);
     border-radius: 15px;
     border: 1px solid var(--card-border);
     backdrop-filter: blur(10px);
-    width: 90%;
+    width: 100%;
     max-width: 500px;
     box-shadow: 0 8px 32px 0 rgba(31, 38, 135, 0.37);
     text-align: center;
@@ -68,7 +161,6 @@ body {
     border: 2px dashed var(--card-border);
     border-radius: 10px;
     padding: 20px;
-    transition: background 0.3s;
 }
 
 #upload-btn {
@@ -88,81 +180,31 @@ body {
     border-radius: 15px;
     margin: 20px auto;
     display: block;
-    box-shadow: 0 4px 15px rgba(0,0,0,0.3);
 }
 
-.dog-animal-title {
-    color: #ff9d00;
-    font-size: 1.5rem;
-    font-weight: bold;
-    margin-top: 20px;
-}
+.dog-animal-title { color: #ff9d00; font-size: 1.5rem; font-weight: bold; margin-top: 20px; }
+.cat-animal-title { color: #ff5e5e; font-size: 1.5rem; font-weight: bold; margin-top: 20px; }
 
-.cat-animal-title {
-    color: #ff5e5e;
-    font-size: 1.5rem;
-    font-weight: bold;
-    margin-top: 20px;
-}
-
-.animal-explain {
-    font-size: 1.1rem;
-    margin: 10px 0;
-}
-
-#label-container {
-    margin-top: 20px;
-    font-size: 0.9rem;
-}
-
+/* Contact Section */
 .contact-section {
     margin-top: 50px;
-    margin-bottom: 50px;
     padding: 30px;
     background: var(--card-bg);
     border-radius: 15px;
     border: 1px solid var(--card-border);
     backdrop-filter: blur(10px);
-    width: 90%;
+    width: 100%;
     max-width: 500px;
-    box-shadow: 0 8px 32px 0 rgba(31, 38, 135, 0.37);
 }
 
-.contact-section h2 {
-    text-align: center;
-    margin-bottom: 25px;
-}
-
-.contact-form {
-    display: flex;
-    flex-direction: column;
-    gap: 15px;
-}
-
-.form-group {
-    display: flex;
-    flex-direction: column;
-    gap: 5px;
-}
-
-.form-group label {
-    font-size: 0.9rem;
-    font-weight: bold;
-}
-
+.contact-form { display: flex; flex-direction: column; gap: 15px; }
+.form-group { display: flex; flex-direction: column; gap: 5px; }
 .form-group input, .form-group textarea {
     padding: 12px;
     border-radius: 8px;
     border: 1px solid var(--card-border);
     background: rgba(255, 255, 255, 0.1);
     color: var(--text-color);
-    font-family: inherit;
-    transition: border-color 0.3s;
-}
-
-.form-group input:focus, .form-group textarea:focus {
-    outline: none;
-    border-color: var(--btn-bg);
 }
 
 .submit-btn {
@@ -171,28 +213,17 @@ body {
     border-radius: 8px;
     background-color: var(--btn-bg);
     color: white;
-    font-size: 1rem;
     font-weight: bold;
     cursor: pointer;
-    transition: opacity 0.3s, transform 0.2s;
-    box-shadow: 0 4px 15px 0 var(--btn-shadow);
-    margin-top: 10px;
 }
 
-.submit-btn:hover {
-    opacity: 0.9;
-    transform: translateY(-2px);
-}
-
+/* Disqus / Comments Section */
 .comments-section {
     margin-top: 50px;
-    margin-bottom: 50px;
-    padding: 30px;
+    width: 100%;
+    padding: 20px;
     background: var(--card-bg);
     border-radius: 15px;
     border: 1px solid var(--card-border);
     backdrop-filter: blur(10px);
-    width: 90%;
-    max-width: 800px;
-    box-shadow: 0 8px 32px 0 rgba(31, 38, 135, 0.37);
 }

@@ -3,66 +3,91 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Animal Face Test & Lotto</title>
+    <title>HwangDang World</title>
     <link rel="stylesheet" href="style.css">
-    <!-- TensorFlow.js and Teachable Machine Libraries -->
     <script src="https://cdn.jsdelivr.net/npm/@tensorflow/tfjs@latest/dist/tf.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/@teachablemachine/image@latest/dist/teachablemachine-image.min.js"></script>
 </head>
 <body>
     <button id="theme-toggle">🌓 Toggle Mode</button>
-    <h1>Animal Face Test</h1>
     
-    <div class="animal-test-container">
-        <div id="upload-area" class="upload-area">
-            <p>사진을 올려주세요 (강아지/고양이 상 테스트)</p>
-            <input type="file" id="image-upload" accept="image/*" hidden>
-            <button id="upload-btn">사진 선택</button>
+    <nav class="main-nav">
+        <button onclick="showPage('home')">메인</button>
+        <button onclick="showPage('lotto')">로또 번호</button>
+        <button onclick="showPage('lunch')">점심 추천</button>
+        <button onclick="showPage('animal')">동물상 테스트</button>
+    </nav>
+
+    <div id="home-page" class="page-content">
+        <h1>HwangDang World</h1>
+        <div class="welcome-card">
+            <p>다양하고 재미있는 유틸리티가 모여있는 황당 월드에 오신 것을 환영합니다!</p>
+            <div class="quick-links">
+                <button onclick="showPage('lotto')">🎰 로또 생성기</button>
+                <button onclick="showPage('lunch')">🍔 점심 메뉴 추천</button>
+                <button onclick="showPage('animal')">🐶 동물상 테스트</button>
+            </div>
         </div>
-        <div id="image-preview-container" style="display: none;">
-            <img id="face-image" src="" alt="your face">
-            <div id="loading-spinner" style="display: none;">분석 중...</div>
-            <div id="label-container"></div>
+
+        <div class="contact-section">
+            <h2>제휴 문의</h2>
+            <form action="https://formspree.io/f/xbdzrknn" method="POST" class="contact-form">
+                <div class="form-group">
+                    <label for="name">성함</label>
+                    <input type="text" id="name" name="name" placeholder="홍길동" required>
+                </div>
+                <div class="form-group">
+                    <label for="email">이메일</label>
+                    <input type="email" id="email" name="_replyto" placeholder="example@email.com" required>
+                </div>
+                <div class="form-group">
+                    <label for="company">회사명/서비스명</label>
+                    <input type="text" id="company" name="company" placeholder="회사 또는 서비스 이름">
+                </div>
+                <div class="form-group">
+                    <label for="message">문의 내용</label>
+                    <textarea id="message" name="message" rows="5" placeholder="제휴 제안 내용을 입력해주세요." required></textarea>
+                </div>
+                <button type="submit" class="submit-btn">문의하기</button>
+            </form>
         </div>
-        <div id="result-message"></div>
     </div>
 
-    <h1>Lotto Number Generator</h1>
-    <lotto-generator></lotto-generator>
-
-    <div class="contact-section">
-        <h2>제휴 문의</h2>
-        <form action="https://formspree.io/f/xbdzrknn" method="POST" class="contact-form">
-            <div class="form-group">
-                <label for="name">성함</label>
-                <input type="text" id="name" name="name" placeholder="홍길동" required>
-            </div>
-            <div class="form-group">
-                <label for="email">이메일</label>
-                <input type="email" id="email" name="_replyto" placeholder="example@email.com" required>
-            </div>
-            <div class="form-group">
-                <label for="company">회사명/서비스명</label>
-                <input type="text" id="company" name="company" placeholder="회사 또는 서비스 이름">
-            </div>
-            <div class="form-group">
-                <label for="message">문의 내용</label>
-                <textarea id="message" name="message" rows="5" placeholder="제휴 제안 내용을 입력해주세요." required></textarea>
-            </div>
-            <button type="submit" class="submit-btn">문의하기</button>
-        </form>
+    <div id="lotto-page" class="page-content" style="display: none;">
+        <h1>Lotto Number Generator</h1>
+        <lotto-generator></lotto-generator>
+        <div id="disqus_lotto" class="comments-section"></div>
     </div>
 
-    <div id="disqus_thread" class="comments-section"></div>
-    <script>
-        (function() { // DON'T EDIT BELOW THIS LINE
-        var d = document, s = d.createElement('script');
-        s.src = 'https://hwangdang-world.disqus.com/embed.js';
-        s.setAttribute('data-timestamp', +new Date());
-        (d.head || d.body).appendChild(s);
-        })();
-    </script>
-    <noscript>Please enable JavaScript to view the <a href="https://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+    <div id="lunch-page" class="page-content" style="display: none;">
+        <h1>Lunch Menu Recommendation</h1>
+        <div class="lunch-container">
+            <div id="lunch-result" class="lunch-result-card">오늘 뭐 먹지?</div>
+            <button id="lunch-btn" class="submit-btn">메뉴 뽑기</button>
+        </div>
+        <div id="disqus_lunch" class="comments-section"></div>
+    </div>
+
+    <div id="animal-page" class="page-content" style="display: none;">
+        <h1>Animal Face Test</h1>
+        <div class="animal-test-container">
+            <div id="upload-area" class="upload-area">
+                <p>사진을 올려주세요 (강아지/고양이 상 테스트)</p>
+                <input type="file" id="image-upload" accept="image/*" hidden>
+                <button id="upload-btn">사진 선택</button>
+            </div>
+            <div id="image-preview-container" style="display: none;">
+                <img id="face-image" src="" alt="your face">
+                <div id="loading-spinner" style="display: none;">분석 중...</div>
+                <div id="label-container"></div>
+            </div>
+            <div id="result-message"></div>
+        </div>
+        <div id="disqus_animal" class="comments-section"></div>
+    </div>
+
+    <!-- Hidden Disqus Container -->
+    <div id="disqus_thread" style="display: none;"></div>
 
     <script src="main.js"></script>
 </body>
