@@ -103,17 +103,26 @@ customElements.define('lotto-generator', LottoGenerator);
 
 // Navigation Logic
 function showPage(pageId) {
-    const pages = ['home', 'lotto', 'lunch', 'animal'];
+    const pages = ['home', 'lotto', 'lunch', 'animal', 'about', 'privacy', 'terms'];
     pages.forEach(id => {
-        document.getElementById(id + '-page').style.display = (id === pageId) ? 'block' : 'none';
+        const page = document.getElementById(id + '-page');
+        if (page) {
+            page.style.display = (id === pageId) ? 'block' : 'none';
+        }
     });
     
-    // Move Disqus thread to the active sub-page
-    if (pageId !== 'home') {
+    // Scroll to top when page changes
+    window.scrollTo(0, 0);
+
+    // Move Disqus thread to the active sub-page (only for tool pages)
+    const toolPages = ['lotto', 'lunch', 'animal'];
+    if (toolPages.includes(pageId)) {
         const disqusContainer = document.getElementById('disqus_thread');
         disqusContainer.style.display = 'block';
         const target = document.getElementById('disqus_' + pageId);
-        target.appendChild(disqusContainer);
+        if (target) {
+            target.appendChild(disqusContainer);
+        }
         
         // Reset Disqus for the new page identifier
         if (typeof DISQUS !== 'undefined') {
