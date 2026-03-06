@@ -227,3 +227,26 @@ body {
     border: 1px solid var(--card-border);
     backdrop-filter: blur(10px);
 }
+
+/* AdSense Container Styles */
+.ad-container {
+    width: 100%;
+    max-width: 800px;
+    margin: 20px auto;
+    text-align: center;
+    overflow: hidden;
+    min-height: 100px;
+    background: rgba(255, 255, 255, 0.05);
+    border-radius: 10px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.ad-top {
+    margin-top: 20px;
+}
+
+.ad-bottom {
+    margin-top: 40px;
+}

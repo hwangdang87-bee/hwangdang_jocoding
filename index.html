@@ -4,7 +4,9 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>HwangDang World</title>
+    <meta name="google-adsense-account" content="ca-pub-3628826020878982">
     <link rel="stylesheet" href="style.css">
+    <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-3628826020878982" crossorigin="anonymous"></script>
     <script src="https://cdn.jsdelivr.net/npm/@tensorflow/tfjs@latest/dist/tf.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/@teachablemachine/image@latest/dist/teachablemachine-image.min.js"></script>
 </head>
@@ -17,6 +19,19 @@
         <button onclick="showPage('lunch')">점심 추천</button>
         <button onclick="showPage('animal')">동물상 테스트</button>
     </nav>
+
+    <!-- Top Display Ad -->
+    <div class="ad-container ad-top">
+        <ins class="adsbygoogle"
+             style="display:block"
+             data-ad-client="ca-pub-3628826020878982"
+             data-ad-slot="auto"
+             data-ad-format="auto"
+             data-full-width-responsive="true"></ins>
+        <script>
+             (adsbygoogle = window.adsbygoogle || []).push({});
+        </script>
+    </div>
 
     <div id="home-page" class="page-content">
         <h1>HwangDang World</h1>
@@ -56,6 +71,18 @@
     <div id="lotto-page" class="page-content" style="display: none;">
         <h1>Lotto Number Generator</h1>
         <lotto-generator></lotto-generator>
+        <!-- Bottom Ad Unit -->
+        <div class="ad-container ad-bottom">
+            <ins class="adsbygoogle"
+                 style="display:block"
+                 data-ad-client="ca-pub-3628826020878982"
+                 data-ad-slot="auto"
+                 data-ad-format="auto"
+                 data-full-width-responsive="true"></ins>
+            <script>
+                 (adsbygoogle = window.adsbygoogle || []).push({});
+            </script>
+        </div>
         <div id="disqus_lotto" class="comments-section"></div>
     </div>
 
@@ -64,6 +91,18 @@
         <div class="lunch-container">
             <div id="lunch-result" class="lunch-result-card">오늘 뭐 먹지?</div>
             <button id="lunch-btn" class="submit-btn">메뉴 뽑기</button>
+        </div>
+        <!-- Bottom Ad Unit -->
+        <div class="ad-container ad-bottom">
+            <ins class="adsbygoogle"
+                 style="display:block"
+                 data-ad-client="ca-pub-3628826020878982"
+                 data-ad-slot="auto"
+                 data-ad-format="auto"
+                 data-full-width-responsive="true"></ins>
+            <script>
+                 (adsbygoogle = window.adsbygoogle || []).push({});
+            </script>
         </div>
         <div id="disqus_lunch" class="comments-section"></div>
     </div>
@@ -82,6 +121,18 @@
                 <div id="label-container"></div>
             </div>
             <div id="result-message"></div>
+        </div>
+        <!-- Bottom Ad Unit -->
+        <div class="ad-container ad-bottom">
+            <ins class="adsbygoogle"
+                 style="display:block"
+                 data-ad-client="ca-pub-3628826020878982"
+                 data-ad-slot="auto"
+                 data-ad-format="auto"
+                 data-full-width-responsive="true"></ins>
+            <script>
+                 (adsbygoogle = window.adsbygoogle || []).push({});
+            </script>
         </div>
         <div id="disqus_animal" class="comments-section"></div>
     </div>
