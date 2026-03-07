@@ -25,15 +25,16 @@ class LottoGenerator extends HTMLElement {
       }
 
       button {
-        padding: 10px 20px;
+        padding: 12px 24px;
         font-size: 1.2rem;
         border: none;
         border-radius: 8px;
-        background-color: var(--btn-bg, #4a90e2);
+        background-color: #4a90e2;
         color: white;
         cursor: pointer;
         transition: background-color 0.3s, transform 0.2s;
-        box-shadow: 0 4px 15px 0 var(--btn-shadow, rgba(74, 144, 226, 0.75));
+        box-shadow: 0 4px 15px 0 rgba(74, 144, 226, 0.4);
+        font-weight: bold;
       }
 
       button:hover {
@@ -43,26 +44,35 @@ class LottoGenerator extends HTMLElement {
 
       .numbers {
         display: flex;
+        flex-wrap: wrap;
+        justify-content: center;
         gap: 10px;
+        min-height: 60px;
       }
 
       .number {
         display: flex;
         justify-content: center;
         align-items: center;
-        width: 50px;
-        height: 50px;
+        width: 45px;
+        height: 45px;
         border-radius: 50%;
         background-color: #f5a623;
         color: white;
-        font-size: 1.5rem;
+        font-size: 1.3rem;
         font-weight: bold;
         box-shadow: 0 2px 4px rgba(0,0,0,0.2);
+        animation: popIn 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+      }
+
+      @keyframes popIn {
+        0% { transform: scale(0); opacity: 0; }
+        100% { transform: scale(1); opacity: 1; }
       }
     `;
 
     const button = document.createElement('button');
-    button.textContent = 'Generate Numbers';
+    button.textContent = '번호 생성하기';
 
     const numbersContainer = document.createElement('div');
     numbersContainer.setAttribute('class', 'numbers');
@@ -90,12 +100,22 @@ class LottoGenerator extends HTMLElement {
   displayNumbers(numbers) {
     const numbersContainer = this.shadowRoot.querySelector('.numbers');
     numbersContainer.innerHTML = '';
-    for (const number of numbers) {
-      const numberElement = document.createElement('div');
-      numberElement.setAttribute('class', 'number');
-      numberElement.textContent = number;
-      numbersContainer.appendChild(numberElement);
-    }
+    numbers.forEach((number, index) => {
+        setTimeout(() => {
+            const numberElement = document.createElement('div');
+            numberElement.setAttribute('class', 'number');
+            
+            // Color mapping like real lotto
+            if (number <= 10) numberElement.style.backgroundColor = '#fbc400';
+            else if (number <= 20) numberElement.style.backgroundColor = '#69c8f2';
+            else if (number <= 30) numberElement.style.backgroundColor = '#ff7272';
+            else if (number <= 40) numberElement.style.backgroundColor = '#aaaaaa';
+            else numberElement.style.backgroundColor = '#b0d840';
+
+            numberElement.textContent = number;
+            numbersContainer.appendChild(numberElement);
+        }, index * 100);
+    });
   }
 }
 
@@ -111,10 +131,19 @@ function showPage(pageId) {
         }
     });
     
-    // Scroll to top when page changes
     window.scrollTo(0, 0);
 
-    // Move Disqus thread to the active sub-page (only for tool pages)
+    // Update active state in nav
+    const navButtons = document.querySelectorAll('.main-nav button');
+    navButtons.forEach(btn => {
+        if (btn.innerText.includes(getPageTitle(pageId))) {
+            btn.classList.add('active');
+        } else {
+            btn.classList.remove('active');
+        }
+    });
+
+    // Handle Disqus
     const toolPages = ['lotto', 'lunch', 'animal'];
     if (toolPages.includes(pageId)) {
         const disqusContainer = document.getElementById('disqus_thread');
@@ -124,7 +153,6 @@ function showPage(pageId) {
             target.appendChild(disqusContainer);
         }
         
-        // Reset Disqus for the new page identifier
         if (typeof DISQUS !== 'undefined') {
             DISQUS.reset({
                 reload: true,
@@ -139,38 +167,60 @@ function showPage(pageId) {
     }
 }
 
-// Initial Disqus Load
-var disqus_config = function () {
-    this.page.url = window.location.href;
-    this.page.identifier = 'home';
-};
+function getPageTitle(id) {
+    switch(id) {
+        case 'home': return '메인';
+        case 'lotto': return '로또';
+        case 'lunch': return '점심';
+        case 'animal': return '동물상';
+        case 'about': return '소개';
+        default: return '';
+    }
+}
 
-(function() {
-    var d = document, s = d.createElement('script');
-    s.src = 'https://hwangdang-world.disqus.com/embed.js';
-    s.setAttribute('data-timestamp', +new Date());
-    (d.head || d.body).appendChild(s);
-})();
+// Cookie Banner Logic
+function acceptCookies() {
+    localStorage.setItem('cookiesAccepted', 'true');
+    document.getElementById('cookie-banner').style.display = 'none';
+}
+
+window.onload = () => {
+    if (!localStorage.getItem('cookiesAccepted')) {
+        document.getElementById('cookie-banner').style.display = 'block';
+    }
+};
 
 // Theme Toggle Logic
 document.getElementById('theme-toggle').addEventListener('click', () => {
   document.body.classList.toggle('light-mode');
+  const isLight = document.body.classList.contains('light-mode');
+  localStorage.setItem('theme', isLight ? 'light' : 'dark');
 });
 
-// Lunch Menu Recommendation
-const lunchMenus = ["김치찌개", "된장찌개", "돈까스", "제육볶음", "쌀국수", "초밥", "햄버거", "피자", "마라탕", "냉면", "비빔밥", "부대찌개", "파스타", "치킨", "삼겹살"];
+// Load Theme Preference
+if (localStorage.getItem('theme') === 'light') {
+    document.body.classList.add('light-mode');
+}
+
+// Lunch Menu Logic
+const lunchMenus = ["김치찌개", "된장찌개", "돈까스", "제육볶음", "쌀국수", "초밥", "햄버거", "피자", "마라탕", "냉면", "비빔밥", "부대찌개", "파스타", "치킨", "삼겹살", "순대국", "육개장", "짜장면", "짬뽕", "샌드위치"];
 document.getElementById('lunch-btn').addEventListener('click', () => {
     const resultElement = document.getElementById('lunch-result');
     resultElement.classList.add('rotating');
     
-    setTimeout(() => {
-        const randomIndex = Math.floor(Math.random() * lunchMenus.length);
-        resultElement.textContent = lunchMenus[randomIndex];
-        resultElement.classList.remove('rotating');
-    }, 500);
+    let counter = 0;
+    const interval = setInterval(() => {
+        resultElement.textContent = lunchMenus[Math.floor(Math.random() * lunchMenus.length)];
+        counter++;
+        if (counter > 10) {
+            clearInterval(interval);
+            resultElement.classList.remove('rotating');
+            resultElement.textContent = lunchMenus[Math.floor(Math.random() * lunchMenus.length)];
+        }
+    }, 50);
 });
 
-// Animal Face Test Logic
+// AI Model Logic
 const URL = "https://teachablemachine.withgoogle.com/models/Ly07AVLo8/"; 
 let model, labelContainer, maxPredictions;
 
@@ -179,41 +229,46 @@ async function init() {
     const metadataURL = URL + "metadata.json";
     model = await tmImage.load(modelURL, metadataURL);
     maxPredictions = model.getTotalClasses();
-    labelContainer = document.getElementById("label-container");
-    for (let i = 0; i < maxPredictions; i++) {
-        labelContainer.appendChild(document.createElement("div"));
-    }
 }
 
 async function predict() {
     const tempImage = document.getElementById("face-image");
     const prediction = await model.predict(tempImage, false);
-    
     prediction.sort((a, b) => parseFloat(b.probability) - parseFloat(a.probability));
     
     let resultTitle, resultExplain;
     switch (prediction[0].className) {
         case "dog":
             resultTitle = "귀여운 강아지상";
-            resultExplain = "당신은 밝고 사교적이며 충직한 성격을 가진 강아지상입니다!";
+            resultExplain = "당신은 밝고 사교적이며 충직한 성격을 가진 강아지상입니다! 주변 사람들에게 긍정적인 에너지를 주는 타입이네요.";
             break;
         case "cat":
             resultTitle = "도도한 고양이상";
-            resultExplain = "당신은 차분하고 신비로우며 매력적인 고양이상입니다!";
+            resultExplain = "당신은 차분하고 신비로우며 매력적인 고양이상입니다! 첫인상은 차가워 보일 수 있지만 알수록 깊은 매력이 있습니다.";
             break;
         default:
-            resultTitle = "알 수 없음";
-            resultExplain = "";
+            resultTitle = "매력 넘치는 얼굴상";
+            resultExplain = "당신만의 독특한 매력이 돋보이는 얼굴상입니다!";
     }
     
     const title = "<div class='" + prediction[0].className + "-animal-title'>" + resultTitle + "</div>";
-    const explain = "<div class='animal-explain pt-2'>" + resultExplain + "</div>";
+    const explain = "<div class='animal-explain'>" + resultExplain + "</div>";
     document.getElementById("result-message").innerHTML = title + explain;
 
+    labelContainer = document.getElementById("label-container");
+    labelContainer.innerHTML = "";
     for (let i = 0; i < maxPredictions; i++) {
-        const classPrediction =
-            prediction[i].className + ": " + (prediction[i].probability * 100).toFixed(0) + "%";
-        labelContainer.childNodes[i].innerHTML = classPrediction;
+        const barWidth = (prediction[i].probability * 100).toFixed(0) + "%";
+        const classDiv = document.createElement("div");
+        classDiv.className = "prediction-bar-container";
+        classDiv.innerHTML = `
+            <div class="prediction-label">${prediction[i].className === 'dog' ? '강아지' : '고양이'}</div>
+            <div class="prediction-bar-bg">
+                <div class="prediction-bar-fill" style="width: ${barWidth}"></div>
+            </div>
+            <div class="prediction-percent">${barWidth}</div>
+        `;
+        labelContainer.appendChild(classDiv);
     }
 }
 
@@ -240,10 +295,15 @@ if (imageInput) {
                 document.getElementById("result-message").innerHTML = "";
                 document.getElementById("label-container").innerHTML = "";
                 
-                if (!model) await init();
-                await predict();
-                
-                loadingSpinner.style.display = 'none';
+                try {
+                    if (!model) await init();
+                    await predict();
+                } catch (err) {
+                    console.error("AI 모델 로딩 실패", err);
+                    document.getElementById("result-message").innerText = "모델 로딩 중 오류가 발생했습니다.";
+                } finally {
+                    loadingSpinner.style.display = 'none';
+                }
             };
             reader.readAsDataURL(file);
         }

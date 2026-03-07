@@ -1,0 +1,3 @@
+User-agent: *
+Allow: /
+Sitemap: https://hwangdang-world.web.app/sitemap.xml
